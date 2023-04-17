@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          {/* Т.к. испольщуется Layout, то слэши в начале пути не нужны */}
           <Route path="tweets" element={<Tweets />} />
         </Route>
+        <Route path="*" element={<h2>Ресурс не найден</h2>} />
       </Routes>
     </Box>
   );
