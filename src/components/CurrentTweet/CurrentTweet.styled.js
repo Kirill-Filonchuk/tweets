@@ -63,12 +63,12 @@ export const Frame = styled.img`
   height: 80px;
   margin: 0 auto;
 `;
-// green - following
+
 export const Button = styled.button`
   width: 196px;
   height: 50px;
   margin: 26px auto 0;
-  background: ${(p) => p.theme.colors.pink};
+  background-color: rgba(92, 211, 168, 1);
   border-radius: ${(p) => p.theme.radii.light};
   color: ${(p) => p.theme.colors.grey};
   font-size: ${(p) => p.theme.fontSize[1]}px;
@@ -76,11 +76,15 @@ export const Button = styled.button`
   line-height: ${(p) => p.theme.lineHeight[1]};
   text-align: center;
   text-transform: uppercase;
-  z-index: 1;
+  z-index: 1999;
   &:hover {
-    background: ${(p) => p.theme.colors.green};
+    background-color: ${(p) => p.theme.colors.green};
   }
   &:active {
-    background: ${(p) => p.theme.colors.green};
+    background-color: ${(p) => p.theme.colors.green};
   }
+`;
+
+export const ButtonN = styled(Button)`
+  background: rgba(235, 216, 255, 1);
 `;

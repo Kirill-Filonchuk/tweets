@@ -63,6 +63,7 @@ const Tweets = () => {
       await updateFollowers(data);
 
       await fetchTweetsData().then((res) => setTweets(res.data));
+
       return false;
     }
   }

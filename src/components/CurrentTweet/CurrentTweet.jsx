@@ -1,36 +1,41 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "styled-components";
-// import { updateFollowers } from "../../utils/tweetApi";
-import { Wraper, Frame, ImgWraper, Button } from "./CurrentTweet.styled";
+
+import {
+  Wraper,
+  Frame,
+  ImgWraper,
+  Button,
+  ButtonN,
+} from "./CurrentTweet.styled";
 
 export const CurrentTweet = ({ tweet, changeFavorite }) => {
   const { id, user, tweets, followers, avatar } = tweet;
 
-  // const [follow, setFollow] = useState(followers);
-  // const [favorite, setFavorite] = useState(followers);
-  // console.log(id, follow);
+  const [acent, setAcent] = useState(false);
 
-  // async function updateFollow() {
-  //   const favorite = changeFavorite({ id });
-  //   console.log(`+++++favorite ${favorite} -> ${id}`);
-  //   if (favorite) {
-  //     const update = followers + 1;
-  //     setFollow(update);
-
-  //     const data = { id, follow: update };
-  //     await updateFollowers(data);
-  //   } else {
-  //     const update = followers - 1;
-  //     setFollow(update);
-
-  //     const data = { id, follow: update };
-  //     await updateFollowers(data);
-  //   }
+  // const writeFavorites = localStorage.getItem("favorites");
+  // const parseFavorite = JSON.parse(writeFavorites);
+  // console.log(parseFavorite);
+  // if (parseFavorite) {
+  //   // const ar = [];
+  //   const ra = parseFavorite.some((item) => item.id === id);
+  //   setAcent(true);
+  //   console.log(ra, "----=-=");
   // }
-  // useEffect(() => {
-  //   const data = { id, follow };
-  //   updateFollowers(data);
-  // }, [setFollow, follow]);
+  useEffect(() => {
+    const writeFavorites = localStorage.getItem("favorites");
+    const parseFavorite = JSON.parse(writeFavorites);
+    // console.log(parseFavorite);
+    if (parseFavorite) {
+      // const ar = [];
+      // const ra = parseFavorite.some((item) => item.id === id);
+      setAcent(parseFavorite.some((item) => item.id === id));
+      // console.log(ra, "----=-=");
+    }
+  }, [setAcent, id]);
+
+  // console.log(`ACENT >>> ${acent}`);
   const theme = useTheme();
   return (
     <Wraper>
@@ -43,9 +48,74 @@ export const CurrentTweet = ({ tweet, changeFavorite }) => {
       <p style={{ marginTop: theme.space[4] }}>
         <span>{followers}</span> followers
       </p>
-      <Button type="button" onClick={() => changeFavorite(tweet)}>
-        follow
-      </Button>
+      {acent ? (
+        <Button
+          acent
+          type="button"
+          onClick={() => {
+            changeFavorite(tweet).then((res) => {
+              if (res) {
+                setAcent(res);
+              } else {
+                setAcent(res);
+              }
+              console.log(`${id} set >>> ${res}`);
+            });
+          }}
+        >
+          following
+        </Button>
+      ) : (
+        <ButtonN
+          acent
+          type="button"
+          onClick={() => {
+            changeFavorite(tweet).then((res) => {
+              if (res) {
+                setAcent(res);
+              } else {
+                setAcent(res);
+              }
+              console.log(`${id} set >>> ${res}`);
+            });
+          }}
+        >
+          follow
+        </ButtonN>
+      )}
     </Wraper>
   );
 };
+
+// useEffect(() => {
+//   updateFollowers(id);
+// }, [acent, setAcent]);
+// function change() {
+//   if (follow !== followers) setAcent(!acent);
+//   return;
+// }
+// if (follow !== followers) setAcent(!acent);
+
+// console.log(id, follow);
+
+// async function updateFollow() {
+//   const favorite = changeFavorite({ id });
+//   console.log(`+++++favorite ${favorite} -> ${id}`);
+//   if (favorite) {
+//     const update = followers + 1;
+//     setFollow(update);
+
+//     const data = { id, follow: update };
+//     await updateFollowers(data);
+//   } else {
+//     const update = followers - 1;
+//     setFollow(update);
+
+//     const data = { id, follow: update };
+//     await updateFollowers(data);
+//   }
+// }
+// useEffect(() => {
+//   const data = { id, follow };
+//   updateFollowers(data);
+// }, [setFollow, follow]);
