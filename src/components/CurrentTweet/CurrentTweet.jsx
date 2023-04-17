@@ -1,15 +1,36 @@
-// {
-//   "id":1,
-//   "user": "Derrtt Gluke",
-//   "tweets":898,
-//   "followers": 73222110,
-//   "avatar": "https://img.icons8.com/doodle/192/000000/walter-white.png"
-//  },
+import { useState, useEffect } from "react";
 import { useTheme } from "styled-components";
+// import { updateFollowers } from "../../utils/tweetApi";
 import { Wraper, Frame, ImgWraper, Button } from "./CurrentTweet.styled";
-// import { useTheme } from "styled-components";
-export const CurrentTweet = ({ props }) => {
-  const { user, tweets, followers, avatar } = props;
+
+export const CurrentTweet = ({ tweet, changeFavorite }) => {
+  const { id, user, tweets, followers, avatar } = tweet;
+
+  // const [follow, setFollow] = useState(followers);
+  // const [favorite, setFavorite] = useState(followers);
+  // console.log(id, follow);
+
+  // async function updateFollow() {
+  //   const favorite = changeFavorite({ id });
+  //   console.log(`+++++favorite ${favorite} -> ${id}`);
+  //   if (favorite) {
+  //     const update = followers + 1;
+  //     setFollow(update);
+
+  //     const data = { id, follow: update };
+  //     await updateFollowers(data);
+  //   } else {
+  //     const update = followers - 1;
+  //     setFollow(update);
+
+  //     const data = { id, follow: update };
+  //     await updateFollowers(data);
+  //   }
+  // }
+  // useEffect(() => {
+  //   const data = { id, follow };
+  //   updateFollowers(data);
+  // }, [setFollow, follow]);
   const theme = useTheme();
   return (
     <Wraper>
@@ -22,7 +43,9 @@ export const CurrentTweet = ({ props }) => {
       <p style={{ marginTop: theme.space[4] }}>
         <span>{followers}</span> followers
       </p>
-      <Button type="button">follow</Button>
+      <Button type="button" onClick={() => changeFavorite(tweet)}>
+        follow
+      </Button>
     </Wraper>
   );
 };

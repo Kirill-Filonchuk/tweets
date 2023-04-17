@@ -12,11 +12,20 @@ export const Layout = () => {
     >
       <header
         style={{
+          display: "flex",
           backgroundColor: "goldenrod",
           height: 70,
+          padding: 20,
         }}
       >
-        <ul>
+        <ul
+          style={{
+            display: "flex",
+            margin: "0 auto",
+            alignItems: "center",
+            gap: 20,
+          }}
+        >
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
@@ -31,8 +40,10 @@ export const Layout = () => {
       <footer
         style={{
           flex: "0 0 auto",
+          padding: 15,
           backgroundColor: "goldenrod",
           height: 70,
+          textAlign: "center",
         }}
       >
         footer of page
