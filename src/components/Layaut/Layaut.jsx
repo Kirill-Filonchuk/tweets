@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { ItemNav, NavBarLink } from "./Layaut.styled";
 
 export const Layout = () => {
   return (
@@ -26,12 +27,12 @@ export const Layout = () => {
             gap: 20,
           }}
         >
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/tweets">Tweets</NavLink>
-          </li>
+          <ItemNav>
+            <NavBarLink to="/">Home</NavBarLink>
+          </ItemNav>
+          <ItemNav>
+            <NavBarLink to="/tweets">Tweets</NavBarLink>
+          </ItemNav>
         </ul>
       </header>
       <main style={{ flex: "1 0 auto" }}>

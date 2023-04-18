@@ -25,15 +25,12 @@ export const fetchTweetsPage = async (page) => {
 
 export const updateFollowers = async (data) => {
   const { id, followers } = data;
-  //   console.log("API", id);
-  console.log("API", followers);
+
   try {
     const res = await axios.put(`/tweets/${id}`, {
       followers: followers,
     });
-    console.log(res);
+
     return res;
-  } catch (e) {
-    console.log(e.message);
-  }
+  } catch (e) {}
 };

@@ -16,15 +16,12 @@ export const CurrentTweet = ({ tweet, changeFavorite }) => {
   useEffect(() => {
     const writeFavorites = localStorage.getItem("favorites");
     const parseFavorite = JSON.parse(writeFavorites);
-    // console.log(parseFavorite);
+
     if (parseFavorite) {
-      // const ra = parseFavorite.some((item) => item.id === id);
       setAcent(parseFavorite.some((item) => item.id === id));
-      // console.log(ra, "----=-=");
     }
   }, [setAcent, id]);
 
-  // console.log(`ACENT >>> ${acent}`);
   const theme = useTheme();
   return (
     <Wraper>
@@ -65,7 +62,6 @@ export const CurrentTweet = ({ tweet, changeFavorite }) => {
               } else {
                 setAcent(res);
               }
-              console.log(`${id} set >>> ${res}`);
             });
           }}
         >
@@ -75,36 +71,3 @@ export const CurrentTweet = ({ tweet, changeFavorite }) => {
     </Wraper>
   );
 };
-
-// useEffect(() => {
-//   updateFollowers(id);
-// }, [acent, setAcent]);
-// function change() {
-//   if (follow !== followers) setAcent(!acent);
-//   return;
-// }
-// if (follow !== followers) setAcent(!acent);
-
-// console.log(id, follow);
-
-// async function updateFollow() {
-//   const favorite = changeFavorite({ id });
-//   console.log(`+++++favorite ${favorite} -> ${id}`);
-//   if (favorite) {
-//     const update = followers + 1;
-//     setFollow(update);
-
-//     const data = { id, follow: update };
-//     await updateFollowers(data);
-//   } else {
-//     const update = followers - 1;
-//     setFollow(update);
-
-//     const data = { id, follow: update };
-//     await updateFollowers(data);
-//   }
-// }
-// useEffect(() => {
-//   const data = { id, follow };
-//   updateFollowers(data);
-// }, [setFollow, follow]);

@@ -59,9 +59,7 @@ const Tweets = () => {
       <button type="button" onClick={btnGoHome}>
         Go to Home
       </button>
-      <p style={{ padding: theme.space[3] }}>
-        Tweets page. It's render on =-'/tweets' path
-      </p>
+
       {loading ? (
         <ClipLoader
           color={"#42fa3c"}
@@ -94,33 +92,9 @@ const Tweets = () => {
         breakClassName={"page-item"}
         breakLinkClassName={"page-link"}
         activeClassName={"active"}
-        // pageCount={pageCount}
-        // renderOnZeroPageCount={null}
       />
     </>
   );
 };
 
 export default Tweets;
-
-// const location = useLocation();
-// console.log("location", location);
-// console.log("navigate", navigate);
-
-// async function updateFollow() {
-//   const favorite = changeFavorite({ id });
-//   console.log(`+++++favorite ${favorite} -> ${id}`);
-//   if (favorite) {
-//     const update = followers + 1;
-//     setFollow(update);
-
-//     const data = { id, follow: update };
-//     await updateFollowers(data);
-//   } else {
-//     const update = followers - 1;
-//     setFollow(update);
-
-//     const data = { id, followers: update };
-//     await updateFollowers(data);
-//   }
-// }
