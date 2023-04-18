@@ -11,24 +11,13 @@ import {
 
 export const CurrentTweet = ({ tweet, changeFavorite }) => {
   const { id, user, tweets, followers, avatar } = tweet;
-
   const [acent, setAcent] = useState(false);
 
-  // const writeFavorites = localStorage.getItem("favorites");
-  // const parseFavorite = JSON.parse(writeFavorites);
-  // console.log(parseFavorite);
-  // if (parseFavorite) {
-  //   // const ar = [];
-  //   const ra = parseFavorite.some((item) => item.id === id);
-  //   setAcent(true);
-  //   console.log(ra, "----=-=");
-  // }
   useEffect(() => {
     const writeFavorites = localStorage.getItem("favorites");
     const parseFavorite = JSON.parse(writeFavorites);
     // console.log(parseFavorite);
     if (parseFavorite) {
-      // const ar = [];
       // const ra = parseFavorite.some((item) => item.id === id);
       setAcent(parseFavorite.some((item) => item.id === id));
       // console.log(ra, "----=-=");
@@ -46,7 +35,7 @@ export const CurrentTweet = ({ tweet, changeFavorite }) => {
         <span>{tweets}</span> tweets
       </p>
       <p style={{ marginTop: theme.space[4] }}>
-        <span>{followers}</span> followers
+        <span>{followers.toLocaleString("en-US")}</span> followers
       </p>
       {acent ? (
         <Button

@@ -4,6 +4,7 @@ export const theme = {
     green: "#5cd3a8",
     grey: "#373737",
     accent: "#373636",
+    greenAccent: "#42fa3c",
     gradient:
       "linear-gradient(115deg, rgba(71, 28, 169, 1), rgba(87.19, 53.78, 162.56, 1) 69%, rgba(75.42, 41.69, 153, 1))",
     mainBg:

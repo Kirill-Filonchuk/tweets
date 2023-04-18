@@ -14,6 +14,15 @@ export const fetchTweetsData = async () => {
   }
 };
 
+export const fetchTweetsPage = async (page) => {
+  try {
+    const response = await axios.get(`/tweets/?page=${page}&limit=8`);
+    return response;
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 export const updateFollowers = async (data) => {
   const { id, followers } = data;
   //   console.log("API", id);
@@ -23,6 +32,7 @@ export const updateFollowers = async (data) => {
       followers: followers,
     });
     console.log(res);
+    return res;
   } catch (e) {
     console.log(e.message);
   }

@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
-import { fetchTweetsData } from "../utils/tweetApi";
-import { updateFollowers } from "../utils/tweetApi";
-import { CurrentTweet } from "../components/CurrentTweet/CurrentTweet";
+import ReactPaginate from "react-paginate";
+
+import ClipLoader from "react-spinners/ClipLoader";
+import { fetchTweetsData, fetchTweetsPage } from "../utils/tweetApi";
+import { Cards } from "../components/Cards/Cards";
 
 const Wraper = styled.div`
   display: grid;
@@ -14,67 +16,44 @@ const Wraper = styled.div`
   padding: 20px 20px;
 `;
 
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
+
 const Tweets = () => {
-  const [tweets, setTweets] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    fetchTweetsData().then((res) => setTweets(res.data));
-  }, [setTweets]);
-
-  useEffect(() => {
-    const writeFavorites = localStorage.getItem("favorites");
-    const parseFavorite = JSON.parse(writeFavorites);
-    if (parseFavorite) {
-      setFavorites([...parseFavorite]);
-    }
-  }, [setFavorites]);
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
-  async function changeFavorite(tweet) {
-    console.log("data*****", tweet);
-    const { id, followers } = tweet;
-    console.log("ADD id", id);
-    const result = favorites.findIndex((item) => item.id === id);
-    console.log("CHECK -> result", result);
-    if (result === -1) {
-      const update = followers + 1;
-      tweet.followers = update;
-      setFavorites([...favorites, tweet]);
-      localStorage.setItem("favorites", JSON.stringify([...favorites, tweet]));
-
-      console.log("++++++++update", update);
-      const data = { id, followers: update };
-      await updateFollowers(data);
-      await fetchTweetsData().then((res) => setTweets(res.data));
-
-      return true;
-    } else if (result >= 0) {
-      favorites.splice(result, 1);
-      setFavorites(favorites);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      const update = followers - 1;
-
-      console.log("-----------update", update);
-      const data = { id, followers: update };
-      await updateFollowers(data);
-
-      await fetchTweetsData().then((res) => setTweets(res.data));
-
-      return false;
-    }
-  }
-
   const theme = useTheme();
   const navigate = useNavigate();
+  const [tweets, setTweets] = useState([]);
+  const [allPages, setAllPages] = useState(0);
+  const [page, setPage] = useState(1);
+  let [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTweetsData().then((res) => {
+      const allPage = Math.ceil(res.data.length / 8);
+      setAllPages(allPage);
+    });
+    fetchTweetsPage(page).then((res) => {
+      if (res.data.length) setLoading(false);
+      setTweets(res.data);
+    });
+  }, [setTweets, page]);
+
+  const handlePageClick = async (data) => {
+    const currentPage = data.selected + 1;
+    await fetchTweetsPage(currentPage).then((res) => {
+      if (res.data.length) setLoading(false);
+      setTweets(res.data);
+    });
+    setPage(currentPage);
+  };
 
   const btnGoHome = () => {
     navigate("/");
   };
-  // console.log(tweets);
+
   return (
     <>
       <button type="button" onClick={btnGoHome}>
@@ -83,18 +62,41 @@ const Tweets = () => {
       <p style={{ padding: theme.space[3] }}>
         Tweets page. It's render on =-'/tweets' path
       </p>
-      <Wraper>
-        {tweets.map((tweet) => {
-          const { id } = tweet;
-          return (
-            <CurrentTweet
-              key={id}
-              tweet={tweet}
-              changeFavorite={changeFavorite}
-            />
-          );
-        })}
-      </Wraper>
+      {loading ? (
+        <ClipLoader
+          color={"#42fa3c"}
+          loading={loading}
+          cssOverride={override}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <Wraper>
+          <Cards tweets={tweets} setTweets={setTweets} page={page} />
+        </Wraper>
+      )}
+      <ReactPaginate
+        previousLabel="<<<"
+        nextLabel=">>>"
+        breakLabel="..."
+        pageCount={allPages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination justify-content-center"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-item"}
+        previousLinkClassName={"page-link"}
+        nextClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        breakClassName={"page-item"}
+        breakLinkClassName={"page-link"}
+        activeClassName={"active"}
+        // pageCount={pageCount}
+        // renderOnZeroPageCount={null}
+      />
     </>
   );
 };

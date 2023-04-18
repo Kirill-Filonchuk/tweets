@@ -78,7 +78,7 @@ export const Button = styled.button`
   text-transform: uppercase;
   z-index: 1999;
   &:hover {
-    background-color: ${(p) => p.theme.colors.green};
+    background-color: ${(p) => p.theme.colors.greenAccent};
   }
   &:active {
     background-color: ${(p) => p.theme.colors.green};
