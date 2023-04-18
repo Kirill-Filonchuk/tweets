@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import ReactPaginate from "react-paginate";
 
 import ClipLoader from "react-spinners/ClipLoader";
@@ -23,7 +23,6 @@ const override = {
 };
 
 const Tweets = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [tweets, setTweets] = useState([]);
   const [allPages, setAllPages] = useState(0);
